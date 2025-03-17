@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LFSR Animation</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="LFSR.js" defer></script>
+</head>
+<nav class="top-half">
+    <div><h2 class="gradienttext h2">LFSR Animation</h2></div>
+    <button id="back">Main Page</button>
+</nav>
+<body>
+    <div class="background">
+        <div class="input-container">
+            <label for="lfsrInput" class="blacktext">LFSR Bits:(e.g., 10110): </label>
+            <input type="text" id="lfsrInput" maxlength="5" placeholder="Enter binary values">
+            <p></p>
+            <label for="xorInput"  class="blacktext">XOR Gate Positions:</label>
+            <input type="text" id="xorInput" placeholder="Enter positions (e.g. 2,4)">
+            <button id="updateButton">Update</button>
+        </div>
+        <div>
+            <button id="animateButton">Animate</button>
+            <!-- <button id="reverseButton">Reverse Last Step</button> -->
+        </div>
+        <canvas></canvas>
+    </div>
+    <div class='results blacktext'>Results
+        <p>&nbsp;</p>
+        <div id = 'results'></div>
+    </div>
+</body>
+</html>

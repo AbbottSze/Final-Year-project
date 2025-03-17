@@ -1,0 +1,253 @@
+/*Login Page/ Sign up page*/
+
+/* Main Container */
+.container {
+    position: absolute;
+    left: 50px;
+    top: 50px;
+    width: 400px;
+    padding: 80px;
+    background: rgb(255, 255, 255);
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    text-align: center;
+}
+
+/* Sign up section*/
+.signup {
+    position: absolute;
+    top: 250px;
+    right: 10%;
+    transform: translateY(-50%);
+    width: 300px;
+    text-align: center;
+}
+
+/* Form Styling */
+.form-box {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Input Fields */
+input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+/* forget password button*/
+a {
+    color: #000000;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/*Homepage*/
+
+/*Background*/
+
+#top-half {
+    padding-left: 0;
+    margin-left: 0;
+    position: absolute;
+    width: 100%;
+    height: 10%;
+    background-color: white;
+    box-sizing: border-box;
+    display: flex;
+    box-sizing: border-box;
+}
+
+.h2 {
+    margin: 5;
+    padding-left: 50px;
+}
+
+
+/*Logout button*/
+#logout {
+    position: absolute;
+    right: 10%;
+    top: 10px;
+    width: 20%
+}
+
+#GoToLFSR {
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    left: 200px;
+    top: 20%
+}
+
+/*LFSR*/
+
+canvas {
+    position: absolute;
+    top: 70px;
+    display: block;
+}
+
+.input-container {
+    position: absolute;
+    top: 80%;
+    left: 30%;
+    width: 500px;
+    transform: translateX(-50%);
+    text-align: center;
+    background: white;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.input-container input {
+    padding: 5px;
+    font-size: 16px;
+    width: 200px;
+    text-align: center;
+}
+
+.input-container button {
+    padding: 5px 10px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.results {
+    position: absolute;
+    right: 50px;
+    top: 175px;
+    width: 200px;
+    height: 75px;
+    padding: 80px;
+    background: rgb(255, 255, 255);
+    border-radius: 10px;
+    text-align: center;
+}
+
+#animateButton {
+    position:fixed;
+    top: 80%;
+    right: 100px;
+    width: 200px;
+    font-size: 16px;
+    cursor: pointer;
+    color: white;
+    border-color: white;
+    border-radius: 5px;
+}
+
+#animateButton:hover {
+    background-color: #0056b3;
+}
+
+#back {
+    position: absolute;
+    right: 10%;
+    top: 10px;
+    width: 20%;
+}
+
+/*Universal*/
+
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    overflow-x: hidden; /* Prevents horizontal scrolling */
+}
+
+/* Background */
+.background {
+    background-image: linear-gradient(to bottom left, rgb(0, 185, 185),#2ad6b4);
+    height: 100vh;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    box-sizing: border-box;
+}
+
+/* white text */
+.whitetext {
+    font-family: Helvetica;
+    color: white;
+    font-size: 35px;
+}
+/* blacktext */
+.blacktext {
+    font-family: Helvetica;
+    color: black;
+}
+
+/* gradient text */
+.gradienttext {
+    position: relative;
+    font-family: Helvetica;
+    background: linear-gradient(rgb(0, 185, 185),#2ad6b4);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Remove footer */
+page-footer-wrapper {
+    visibility: hidden;
+}  
+
+/* Input Field Focus */
+input:focus {
+    border-color: #007BFF;
+    box-shadow: 0px 0px 8px rgba(0, 123, 255, 0.3);
+    outline: none;
+}
+
+/* Buttons */
+button {
+    width: 50%;
+    padding: 12px;
+    background: linear-gradient(to bottom left, rgb(0, 199, 199),#2ad6b4);
+    color: white;
+    border-color: white;
+    border-style: solid;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #0056b3;
+}
+
+/* Paragraphs & Links */
+p {
+    margin: 10px 0;
+}
+
+/* Hide Elements */
+.hidden {
+    display: none;
+}
+
+/* Mobile Responsive Design */
+@media screen and (max-width: 400px) {
+    .container {
+        width: 90%;
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    /* Styles for desktop view */
+    body {
+        font-size: 16px;
+    }
+}
