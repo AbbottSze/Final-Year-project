@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", function() {
             duration: 500,
             easing: "easeInOutQuad",
             complete: function() {
-                window.location.href = "Login.html"; // Redirect after animation
+                window.location.href = "index.html"; // Redirect after animation
             }
         });
     });

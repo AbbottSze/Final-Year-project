@@ -90,6 +90,7 @@ function drawBits(x, y, bitValue) {
 
 // Function to update LFSR and XOR positions
 function updateLFSRAndXOR() {
+    results = [];
     let lfsrInput = document.getElementById("lfsrInput").value;
     let xorInput = document.getElementById("xorInput").value;
 
@@ -275,7 +276,6 @@ function reset() {
     xorPauseDone = false;
     counter = 0;
     movingBit = lfsrValues[lfsrValues.length - 1];
-    results = [];
 
     drawLFSRStructure();
     initXorBits();
