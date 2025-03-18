@@ -82,11 +82,38 @@ a:hover {
 }
 
 #GoToLFSR {
+    position: relative;
+    width: 100px;
+    height: 50px;
+    bottom: 10%;
+}
+
+.LFSRPopUp{
     position: absolute;
-    width: 150px;
-    height: 150px;
-    left: 200px;
-    top: 20%
+    width: 400px;
+    background-color: white;
+    border-radius: 6px;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.1);
+    text-align: center;
+    padding: 0 ,30px, 30px;
+    visibility: hidden;
+    transition: transform 0.4s, top 0.4s;
+}
+
+.open-LFSRPopUp{
+    visibility: visible;
+    top: 50%;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.LFSRButton{
+    position: absolute;
+    width:200px;
+    height: 175px;
+    left: 20%;
+    top: 20%;
 }
 
 /*LFSR*/
@@ -136,15 +163,10 @@ canvas {
 }
 
 #animateButton {
-    position:fixed;
+    position:absolute;
     top: 80%;
     right: 100px;
     width: 200px;
-    font-size: 16px;
-    cursor: pointer;
-    color: white;
-    border-color: white;
-    border-radius: 5px;
 }
 
 #animateButton:hover {

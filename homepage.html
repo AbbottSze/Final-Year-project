@@ -13,10 +13,15 @@
     <button id="logout">Logout</button>
 </nav>
 <body>
-    <div>
-    </div>
     <div class="background">
-        <button id="GoToLFSR">LFSR <span class="LFSRPopUp">description</span></button>
+        <div>
+            <button onclick="openLFSRPopUp()" class="LFSRButton">LFSR</button>
+            <div class="LFSRPopUp" id="LFSRPopUp">
+                <h2 class="blacktext">LFSR Description</h2>
+                <p class="blacktext">bla bla bla</p>
+                <button id="GoToLFSR">Proceed</button>
+            </div>
+        </div>
     </div>
 </body>
 </html>

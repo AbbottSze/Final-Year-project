@@ -1,3 +1,8 @@
+let LFSRPopUp = document.getElementById("LFSRPopUp")
+
+function openLFSRPopUp (){
+    LFSRPopUp.classList.add("open-LFSRPopUp");
+}
 document.addEventListener("DOMContentLoaded", function() {
     // Fade-in animation for the home page
     anime({
