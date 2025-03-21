@@ -18,7 +18,12 @@
             <button onclick="openLFSRPopUp()" class="LFSRButton">LFSR</button>
             <div class="LFSRPopUp" id="LFSRPopUp">
                 <h2 class="blacktext">LFSR Description</h2>
-                <p class="blacktext">bla bla bla</p>
+                <p class="blacktext">A Linear Feedback Shift Register (LFSR) is a shift register used to generate pseudo-random sequences of bits. It operates by shifting bits in a register while applying a linear feedback function (usually XOR) to certain positions (taps) in the register.</p>
+                <p>How It Works:</p>
+                <p>1. Initialization: The LFSR starts with a (initial state).</p>
+                <p>2. Shifting: On each clock cycle, all bits shift one position to the right.</p>
+                <p>3. Feedback Calculation: The new bit (shifted into the register) is computed using the XOR of selected tap positions.</p>
+                <p>4. Repeat: This process continues, generating a sequence of bits until it eventually repeats.</p>    
                 <button id="GoToLFSR">Proceed</button>
             </div>
         </div>

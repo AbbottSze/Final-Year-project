@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LFSR Animation</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="CBC.js" defer></script>
+</head>
+<nav class="top-half">
+    <div><h2 class="gradienttext h2">CBC Block Cypher Animation</h2></div>
+    <button id="back">Main Page</button>
+</nav>
+<body>
+    <div class="background">
+        <div class="input-container">
+            <label for="CBCInput" class="blacktext">CBC Bits:(e.g., 10110): </label>
+            <input type="text" id="CBCInput" maxlength="10" placeholder="Enter binary values">
+            <p></p>
+            <label for="IVInput"  class="blacktext">IV Value:</label>
+            <input type="text" id="xorInput" maxlength="5" placeholder="Enter binary values">
+            <button id="RandomIV">Random</button>
+            <button id="updateButton">Update</button>
+        </div>
+    </div>
+    <canvas styles=""></canvas>
+</body>
+</html>

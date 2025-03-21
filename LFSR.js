@@ -41,7 +41,7 @@ function drawLFSRStructure() {
     c.stroke();
 
     //output
-    c.font = "20px Arial";
+    c.font = "20px Helveticas";
     c.fillStyle = "black";
     c.textAlign = "center";
     c.textBaseline = "middle";
@@ -81,7 +81,7 @@ function drawLFSRStructure() {
 
 // Function to draw bit values inside boxes
 function drawBits(x, y, bitValue) {
-    bits.font = "20px Arial";
+    bits.font = "20px Helvetica";
     bits.fillStyle = "black";
     bits.textAlign = "center";
     bits.textBaseline = "middle";
@@ -220,7 +220,7 @@ function moveBits() {
             
                 // Draw XOR result near arc (left of arc)
                 if (xorResult !== null) {
-                    bits.font = "20px Arial";
+                    bits.font = "20px Helvetica";
                     bits.fillStyle = "red";
                     bits.fillText(`${xorResult}`, xorX - 20, 160);
                     x-= 20
