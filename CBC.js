@@ -1,9 +1,9 @@
 var canvas = document.querySelector('canvas');
 var c = canvas.getContext('2d');
 const animateButton = document.getElementById("animateButton");
-const inputButton = document.getElementById("inputButton");
-const plaintextInput = document.getElementById("plaintextInput");
-const ivInput = document.getElementById("ivInput");
+const updateButton = document.getElementById("updateButton");
+const plaintextInput = document.getElementById("CBCInput");
+const ivInput = document.getElementById("xorInput");
 
 canvas.width = window.innerWidth * 0.9;
 canvas.height = window.innerHeight * 0.7;
@@ -12,50 +12,69 @@ c.strokeStyle = 'black';
 
 // CBC encryption variables + initial values
 let blockSize = 50;
-let iv = "10100";
-let CBCValues = [1,0,0,1,0]
+let iv = [1,0,0,1,0];
+let CBCValues = [1,0,0,0,0]
 let ciphertexts = [];
-let processingIndex = 0;
+let processingIndex = null;
 let processing = false;
+let x = 100;
+let lastx = x + (blockSize *4)
 
 // Function to get user input
 function updateInput() {
     let inputText = plaintextInput.value;
-    iv = ivInput.value;
-    CBCValues = inputText.split(' ');
+    iv = ivInput.value.split(",").filter(v => v.trim() !== "").map(Number);
+    CBCValues = inputText.split(' ').map(Number);
     drawCBCStructure();
 }
+
+
 
 // Draw CBC structure with connecting lines
 function drawCBCStructure() {
     c.clearRect(0, 0, canvas.width, canvas.height);
     
-    c.font = "20px Arial";
+    c.font = "20px Helvetica";
     c.fillStyle = "black";
-    drawBlock(100, 150, iv, "IV");
 
-    for (let i = 0; i < blocks.length; i++) {
-        drawBlock(50, 50 + i * 100, blocks[i], `P${i+1}`);
-        drawArrow(150, 175 + i * 100, 250, 175 + i * 100);
+    for (let i = 0; i < iv.length; i++) {
+        console.log(`Drawing IV block ${i + 1} at x=${x} with value=${iv[i]}`);
+        drawBlock(x, 150, iv[i]);
+        x += 50;
     }
+    x += 100;
+    for (let i = 0; i < CBCValues.length; i++) {
+        drawBlock(x, 100, CBCValues[i],);
+        drawBlock(x, 250,'')
+        x+=50;
+    }
+    
+    if (CBCValues.length > 5) {
+
+    }
+    drawLine(lastx +50, 175, lastx + 275, 175);
+    drawLine(lastx + 275, 150, lastx + 275, 250);
 }
 
-function drawBlock(x, y, value, label) {
-    c.strokeRect(x, y, blockSize * 2, blockSize);
+function drawBlock(x, y, value) {
+
+    c.beginPath()
+    c.moveTo(x, y);
+    c.lineTo(x + blockSize, y);
+    c.lineTo(x + blockSize, y + blockSize);
+    c.lineTo(x, y + blockSize);
+    c.closePath();
+    c.stroke();
     c.fillStyle = "black";
-    c.fillText(value, x + blockSize, y + blockSize / 2);
-    c.fillText(label, x - 30, y + blockSize / 2);
+    c.fillText(String(value), x + 20, y + 5 + blockSize / 2);
 }
 
-function drawArrow(x1, y1, x2, y2) {
+
+
+function drawLine(x1, y1, x2, y2) {
     c.beginPath();
     c.moveTo(x1, y1);
     c.lineTo(x2, y2);
-    c.stroke();
-    c.beginPath();
-    c.moveTo(x2 - 5, y2 - 5);
-    c.lineTo(x2, y2);
-    c.lineTo(x2 - 5, y2 + 5);
     c.stroke();
 }
 
@@ -75,8 +94,8 @@ function processBlock() {
     let encryptedBlock = xorResult.split('').reverse().join(''); // Simulated encryption
     ciphertexts.push(encryptedBlock);
     
-    drawBlock(250, 150 + processingIndex * 100, xorResult, "XOR");
-    drawBlock(450, 150 + processingIndex * 100, encryptedBlock, `C${processingIndex+1}`);
+    //drawBlock(250, 150 + processingIndex * 100, xorResult, "XOR");
+    //drawBlock(450, 150 + processingIndex * 100, encryptedBlock, `C${processingIndex+1}`);
     drawArrow(350, 175 + processingIndex * 100, 450, 175 + processingIndex * 100);
     
     processingIndex++;
@@ -87,7 +106,7 @@ function startCBCAnimation() {
     if (!processing) {
         processingIndex = 0;
         ciphertexts = [];
-        drawCBCStructure();
+        //drawCBCStructure();
         processing = true;
         animateButton.disabled = true;
         processBlock();
@@ -95,9 +114,8 @@ function startCBCAnimation() {
 }
 
 drawCBCStructure();
-document.getElementById("UpdateButton").addEventListener("click", updateInput);
-document.getElementById("animateButton").addEventListener("click", startCBCAnimation);
-
+updateButton.addEventListener("click", updateInput);
+animateButton.addEventListener("click", startCBCAnimation);
 
 // Button to homepage
 document.getElementById("back").addEventListener("click", function() {
