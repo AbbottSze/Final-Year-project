@@ -37,7 +37,6 @@ function drawCBCStructure() {
 
     //draw iv block
     for (let i = 0; i < 5; i++) {
-        //console.log(`Drawing IV block ${i + 1} at x=${x} with value=${iv[i]}`);
         drawBlock(x, 150, iv[i]);
         x += 50;
     }
@@ -319,11 +318,9 @@ function hardreset() {
     counter = 0;
     phase = 0;
     ciphertexts = [];
-    //CBCValues = [];
     AllValues = [];
     paused = true;
     xorResult = null;
-    //x = 100;
     ivx = 325;
     ivy = 180;
     ivTargetx = 530;
@@ -343,7 +340,6 @@ function hardreset() {
 
     animateButton.disabled = false;
 }
-
 
 // Control button handler
 function handleAnimationButton() {

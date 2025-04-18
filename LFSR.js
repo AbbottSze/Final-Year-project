@@ -19,7 +19,6 @@ let boxSize = 50;
 // Function to draw LFSR structure (boxes & feedback loop)
 function drawLFSRStructure() {
     c.clearRect(0, 0, canvas.width, canvas.height);
-
     let numBoxes = lfsrValues.length;
     // Draw feedback loop lines (Shifted Right)
     let lastBoxX = startX + (numBoxes - 1) * boxSize + boxSize;
@@ -100,8 +99,7 @@ function updateLFSRAndXOR() {
             alert("LFSR cannot be all zeros! Please enter a valid sequence.");
             return;
         }
-        lfsrValues = lfsrInput.split('').map(Number);
-        console.log(lfsrValues);
+        lfsrValues = lfsrInput.split('').map(Number).reverse();
         movingBit = lfsrValues[lfsrValues.length - 1];
         // Recalculate x and lastbox based on new lfsrValues
         x = startX + (lfsrValues.length - 1) * boxSize;
