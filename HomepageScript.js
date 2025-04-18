@@ -1,7 +1,13 @@
 let LFSRPopUp = document.getElementById("LFSRPopUp")
+let CBCPopUp = document.getElementById("CBCPopUp")
 
 function openLFSRPopUp (){
     LFSRPopUp.classList.add("open-LFSRPopUp");
+}
+
+function openCBCPopUp (){
+    console.log('hi')
+    CBCPopUp.classList.add("open-CBCPopUp");
 }
 document.addEventListener("DOMContentLoaded", function() {
     // Fade-in animation for the home page
@@ -35,6 +41,19 @@ document.addEventListener("DOMContentLoaded", function() {
             easing: "easeInOutQuad",
             complete: function() {
                 window.location.href = "LFSR.html"; 
+            }
+        });
+    });
+
+    document.getElementById("GoToCBC").addEventListener("click", function() {
+        anime({
+            targets: "body",
+            opacity: 0,
+            translateX: [-50, 50],
+            duration: 500,
+            easing: "easeInOutQuad",
+            complete: function() {
+                window.location.href = "CBC.html"; 
             }
         });
     });

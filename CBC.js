@@ -12,7 +12,7 @@ canvas.height = window.innerHeight * 0.7;
 // CBC encryption variables + initial values
 let blockSize = 50;
 let iv = [0,0,1,0,0];
-let CBCValues = [1,0,0,1,0,1,1];
+let CBCValues = [1,0,0,1];
 let AllValues = [];
 let ciphertexts = [];
 let processingIndex = null;
@@ -23,7 +23,17 @@ let padding = false
 
 // Draw CBC structure with connecting lines
 function drawCBCStructure() {
+    x = 100;
+    padding = false;
     c.clearRect(0, 0, canvas.width, canvas.height);
+    c.fillStyle = 'black'
+    c.font = "20px Helvetica";
+    c.textAlign = "center";
+    c.textBaseline = "middle";
+    c.fillText('IV', 110, 125);
+    c.fillText('Plain Text', 450, 75);
+    c.fillText('Cipher Text', 450, 225);
+    c.fillText('Block 1', 575, 25);
 
     //draw iv block
     for (let i = 0; i < 5; i++) {
@@ -56,6 +66,9 @@ function drawCBCStructure() {
     drawXOR(lastx + 275)
     if (CBCValues.length > 5) {
         x = 800
+        c.fillText('Plain Text', 825, 75);
+        c.fillText('Cipher Text', 825, 225);
+        c.fillText('Block 2', 925, 25);
         for (let i = 0 ; i < 5; i++) {
             value = CBCValues[i + 5];
             if (value == null){
@@ -92,6 +105,7 @@ function drawBits(x, y, bitValue) {
     bits.textAlign = "center";
     bits.textBaseline = "middle";
     bits.fillText(bitValue, x + 5, y - 5);
+    padding = false;
 }
 
 function drawBlock(x, y, value, padding) {
@@ -182,91 +196,23 @@ function Block1() {
         animateButton.disabled = false;
         ciphertexts.push(movingBit);
         counter += 1;
-    
         if (counter < 5) {
             reset1();
             drawCBCStructure();
-        } else {
-            // Automatically switch to Block2
-            reset2();
-            Block2();
+        } else if (counter > CBCValues.length){
+            console.log("hi")
+            drawCBCStructure();
+            reset1();
+            animateButton.disabled = true;
+            return
+        }   else if (CBCValues.length > 5) {
+                // Automatically switch to Block2
+                drawCBCStructure();
+                reset2();
+                Block2();
         }
     }
 }
-
-let ivx_2 = 675;
-let ivy_2 = 250;
-let ivTargetx_2 = 750;
-let ivTargety_2 = 180;
-let startx_2 = 930;
-let starty_2 = 130;
-let currentx_2 = 930;
-let currenty_2 = 130;
-
-function Block2() {
-    counter+=1
-    if (paused) return;
-    requestAnimationFrame(Block2);
-    bits.clearRect(0, 0, canvas.width, canvas.height);
-    drawCBCStructure();
-    console.log(iv);
-
-    drawBits(currentx_2, currenty_2, movingBit);
-    drawBits(ivx_2, ivy_2, ivBit);
-    if (currenty_2 <= starty_2 + 25) {
-        currenty_2 += dy;
-    }
-
-    if (phase === 0) {
-        console.log('0')
-        if (ivx_2 < ivTargetx_2) {
-            ivx_2 += dx;}
-        else {phase = 1}
-    }
-    if (phase === 1) {
-        console.log('1')
-        ivy_2 -= dy;
-        if (ivy_2 < ivTargety_2) {
-            phase = 2;}
-    } else if (phase === 2) {
-        console.log('2')
-        ivx_2 += dx;
-        if (ivx_2 > ivTargetx_2 + 130) {
-            phase = 3
-        }
-    } else if (phase === 3 ) {
-        console.log('3')
-        if (xorResult == null) {
-            //console.log('diu')
-            paused = true;
-            animateButton.disabled = false;
-            xorResult = calculateXORResult();
-            console.log("XOR Result is now moving:", movingBit);
-            //console.log('hi')
-            bits.fillStyle = "red";
-            bits.fillText(`${xorResult}`, currentx_2 + 5, currenty_2 + 40);
-            currenty_2 += 40
-        }
-        currenty_2 += dy;
-        if (currenty_2 >= 250) {phase = 4};
-    } else if (phase === 4) {
-        paused = true;
-        pos += 1
-        animateButton.disabled = false;
-        ciphertexts.push(movingBit);
-        drawCBCStructure();
-        reset2()
-    }
-}
-
-function calculateXORResult() {
-// Collect tap bits according to xorPositions
-    if (ivBit == movingBit){
-        return movingBit = 0;
-    } else {
-        return movingBit = 1;
-    }
-};
 
 function reset1() {
     movingBit = AllValues[pos];
@@ -284,22 +230,120 @@ function reset1() {
     animateButton.disabled = false;
 }
 
+function Block2() {
+    if (paused) return;
+    drawBits(ivx, ivy, ivBit);
+    requestAnimationFrame(Block2);
+    bits.clearRect(0, 0, canvas.width, canvas.height);
+    drawCBCStructure();
+    console.log(iv);
+
+    drawBits(currentx, currenty, movingBit);
+    drawBits(ivx, ivy, ivBit);
+    if (currenty <= starty + 25) {
+        currenty += dy;
+    }
+
+    if (phase === 0) {
+        console.log('0')
+        if (ivx < ivTargetx) {
+            ivx += dx;}
+        else {phase = 1}
+    }
+    if (phase === 1) {
+        console.log('1')
+        ivy -= dy;
+        if (ivy < ivTargety) {
+            phase = 2;}
+    } else if (phase === 2) {
+        console.log('2')
+        ivx += dx;
+        if (ivx > ivTargetx + 130) {
+            phase = 3
+        }
+    } else if (phase === 3 ) {
+        console.log('3')
+        if (xorResult == null) {
+            //console.log('diu')
+            paused = true;
+            animateButton.disabled = false;
+            xorResult = calculateXORResult();
+            console.log("XOR Result is now moving:", movingBit);
+            //console.log('hi')
+            bits.fillStyle = "red";
+            bits.fillText(`${xorResult}`, currentx + 5, currenty + 40);
+            currenty += 40
+        }
+        currenty += dy;
+        if (currenty >= 250) {phase = 4};
+    } else if (phase === 4) {
+        paused = true;
+        pos += 1
+        counter+=1
+        animateButton.disabled = false;
+        ciphertexts.push(movingBit);
+        drawCBCStructure();
+        reset2()
+    }
+}
+
+function calculateXORResult() {
+// Collect tap bits according to xorPositions
+    if (ivBit == movingBit){
+        return movingBit = 0;
+    } else {
+        return movingBit = 1;
+    }
+};
+
 function reset2() {
     movingBit = AllValues[pos];
+    iv.push(ciphertexts[pos-5]);
     ivBit = [iv[pos]];
     phase = 0;
-    ivx_2 = 675;
-    ivy_2 = 250;
-    ivTargetx_2 = 750;
-    ivTargety_2 = 180;
-    startx_2 = 930;
-    starty_2 = 130;
-    currentx_2 = 930;
-    currenty_2 = 130;
+    ivx = 675;
+    ivy = 275;
+    ivTargetx = 750;
+    ivTargety = 180;
+    startx = 930;
+    starty = 130;
+    currentx = 930;
+    currenty = 130;
     xorResult = null;
-    iv = ivValue+ciphertexts;
+    console.log(iv)
     animateButton.disabled = false;
 }
+
+function hardreset() {
+    pos = 0;
+    counter = 0;
+    phase = 0;
+    ciphertexts = [];
+    //CBCValues = [];
+    AllValues = [];
+    paused = true;
+    xorResult = null;
+    //x = 100;
+    ivx = 325;
+    ivy = 180;
+    ivTargetx = 530;
+    ivTargety = 180;
+    startx = 580;
+    starty = 130;
+    currentx = 585;
+    currenty = 130;
+    padding = false;
+
+    // Rebuild the entire structure (this also refills AllValues)
+    drawCBCStructure();
+
+    // Now that AllValues exists, we can safely get the first bit
+    movingBit = AllValues[pos];
+    ivBit = [iv[pos]];
+
+    animateButton.disabled = false;
+}
+
 
 // Control button handler
 function handleAnimationButton() {
@@ -309,39 +353,43 @@ function handleAnimationButton() {
             animateButton.disabled = true;
             Block1();
         }
-    } else {
+    } else if (counter < 10 && CBCValues.length > 5) {
         if (paused) {
             paused = false;
             animateButton.disabled = true;
             Block2();
         }
+        animateButton.disabled = true;
     }
 }
 
 document.getElementById("updateButton").addEventListener("click", () => {
-
     let CBCInput = document.getElementById("CBCInput").value;
     let ivInput = document.getElementById("IV").value;
-    if (/^[01]{3,5}$/.test(CBCInput)) {
+    console.log(ivInput)
+    if (/^[01]{3,10}$/.test(CBCInput)) {
         if (/^0+$/.test(CBCInput)) {
             alert("CBC cannot be all zeros! Please enter a valid sequence.");
             return;
         }
         CBCValues = CBCInput.split('').map(Number);
-        console.log(CBCValues);
-        // Recalculate x and lastbox based on new lfsrValues
     } else {
         alert("Please enter a valid binary sequence (0s and 1s, between 3-10 digits).");
         return;
     }
-    ciphertexts = [];
-    if (iv.length == 0){
-        ivValue = ivInput.split(' ').map(Number);
+    //ciphertexts = [];
+    let newiv = ivInput.split('').map(Number);
+    console.log(newiv);
+    if (/^[01]{5}$/.test(ivInput)){
+        iv = newiv;
+    } else if (newiv.length == 0) {
+    } else {
+        alert("Please enter a valid Initialization Vector (0s and 1s, 5 digits).");
+        return
     }
+    hardreset();
     drawCBCStructure();
-    reset1();
 });
-
 
 document.getElementById("RandomIV").addEventListener("click", () => {
     let ran = 0;

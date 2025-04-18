@@ -81,12 +81,14 @@ a:hover {
     width: 20%
 }
 
+/*LFSR*/
 #GoToLFSR {
     position: relative;
     width: 100px;
     height: 50px;
     bottom: 10%;
 }
+
 
 .LFSRPopUp{
     position: absolute;
@@ -97,7 +99,7 @@ a:hover {
     left: 50%;
     transform: translate(-50%, -50%) scale(0.1);
     text-align: center;
-    padding: 0 ,30px, 30px;
+    padding: 0 30px 30px;
     visibility: hidden;
     transition: transform 0.4s, top 0.4s;
 }
@@ -106,13 +108,51 @@ a:hover {
     visibility: visible;
     top: 50%;
     transform: translate(-50%, -50%) scale(1);
+    z-index: 1;
 }
 
 .LFSRButton{
     position: absolute;
-    width:200px;
+    width: 200px;
     height: 175px;
     left: 20%;
+    top: 20%;
+}
+
+/*CBC*/
+#GoToCBC {
+    position: relative;
+    width: 100px;
+    height: 50px;
+    bottom: 10%;
+}
+
+.CBCPopUp{
+    position: absolute;
+    width: 400px;
+    background-color: white;
+    border-radius: 6px;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.1);
+    text-align: center;
+    padding: 0 30px 30px;
+    visibility: hidden;
+    transition: transform 0.4s, top 0.4s;
+}
+
+.open-CBCPopUp{
+    visibility: visible;
+    top: 50%;
+    transform: translate(-50%, -50%) scale(1);
+    z-index: 1;
+}
+
+.CBCButton{
+    position: absolute;
+    width:200px;
+    height: 175px;
+    left: 45%;
     top: 20%;
 }
 
