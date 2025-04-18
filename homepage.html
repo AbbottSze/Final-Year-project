@@ -17,25 +17,29 @@
         <div>
             <button onclick="openLFSRPopUp()" class="LFSRButton">LFSR Stream Cipher</button>
             <div class="LFSRPopUp" id="LFSRPopUp">
+                <button class="close-btn" onclick="closePopUp('LFSR')">X</button>
                 <h2 class="blacktext">LFSR Description</h2>
-                <p class="blacktext">A Linear Feedback Shift Register (LFSR) is a shift register used to generate pseudo-random sequences of bits. It operates by shifting bits in a register while applying a linear feedback function (usually XOR) to certain positions (taps) in the register.</p>
-                <p>How It Works:</p>
-                <p>1. Initialization: The LFSR starts with a (initial state).</p>
-                <p>2. Shifting: On each clock cycle, all bits shift one position to the right.</p>
-                <p>3. Feedback Calculation: The new bit (shifted into the register) is computed using the XOR of selected tap positions.</p>
-                <p>4. Repeat: This process continues, generating a sequence of bits until it eventually repeats.</p>    
+                <p class="blacktext">An LFSR is a shift register that uses a linear function (usually XOR) of previous bits to generate new bits. It's commonly used in cryptography, random number generation, and error checking.</p>
+                <p class="blacktext">How it works (Steps):</p>
+                <p class="blacktext">1. Start with an initial binary value (called the seed).</p>
+                <p class="blacktext">2. Shift all bits to the right by one position.</p>
+                <p class="blacktext">3. Calculate a new bit using XOR on selected bits (called taps).</p>
+                <p class="blacktext">4. Insert the new bit at the leftmost position.</p>
+                <p class="blacktext">5. Repeat the process for each new bit.</p> 
                 <button id="GoToLFSR">Proceed</button>
             </div>
         </div>
-        <div>            <button onclick="openCBCPopUp()" class="CBCButton">CBC Block Cipher</button>
+        <div>            
+            <button onclick="openCBCPopUp()" class="CBCButton">CBC Block Cipher</button>
             <div class="CBCPopUp" id="CBCPopUp">
+                <button class="close-btn" onclick="closePopUp('CBC')">X</button>
                 <h2 class="blacktext">CBC Description</h2>
-                <p class="blacktext">A Linear Feedback Shift Register (LFSR) is a shift register used to generate pseudo-random sequences of bits. It operates by shifting bits in a register while applying a linear feedback function (usually XOR) to certain positions (taps) in the register.</p>
-                <p>How It Works:</p>
-                <p>1. Initialization: The LFSR starts with a (initial state).</p>
-                <p>2. Shifting: On each clock cycle, all bits shift one position to the right.</p>
-                <p>3. Feedback Calculation: The new bit (shifted into the register) is computed using the XOR of selected tap positions.</p>
-                <p>4. Repeat: This process continues, generating a sequence of bits until it eventually repeats.</p>    
+                <p class="blacktext">CBC is a mode of encryption that chains blocks together. Each plaintext block is XORed with the previous ciphertext block before encryption, making patterns harder to detect.</p>
+                <p class="blacktext">How It Works:</p>
+                <p class="blacktext">1. Start with an Initialization Vector (IV) — a random block used for the first step.</p>
+                <p class="blacktext">2. XOR the first plaintext block with the IV.</p>
+                <p class="blacktext">3. Use the output as the "chaining value" for the next block.</p>
+                <p class="blacktext">4. Repeat: XOR the next plaintext block with the previous ciphertext.</p>    
                 <button id="GoToCBC">Proceed</button>
             </div>
         </div>

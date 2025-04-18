@@ -1,5 +1,6 @@
 let LFSRPopUp = document.getElementById("LFSRPopUp")
 let CBCPopUp = document.getElementById("CBCPopUp")
+let close = document.getElementById("close")
 
 function openLFSRPopUp (){
     LFSRPopUp.classList.add("open-LFSRPopUp");
@@ -9,6 +10,15 @@ function openCBCPopUp (){
     console.log('hi')
     CBCPopUp.classList.add("open-CBCPopUp");
 }
+
+function closePopUp(type) {
+    if (type === 'LFSR') {
+        LFSRPopUp.classList.remove("open-LFSRPopUp");
+    } else if (type === 'CBC') {
+        CBCPopUp.classList.remove("open-CBCPopUp");
+    }
+}
+
 document.addEventListener("DOMContentLoaded", function() {
     // Fade-in animation for the home page
     anime({
