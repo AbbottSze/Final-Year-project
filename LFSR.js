@@ -12,7 +12,7 @@ bits.strokeStyle = 'black';
 
 // Default LFSR values & XOR positions
 var lfsrValues = [1, 0, 1, 1, 0];
-var xorPositions = [2, 3]; // Default XOR positions
+var xorPositions = [2, 3];
 let startX = 300;
 let boxSize = 50;
 
@@ -20,7 +20,6 @@ let boxSize = 50;
 function drawLFSRStructure() {
     c.clearRect(0, 0, canvas.width, canvas.height);
     let numBoxes = lfsrValues.length;
-    // Draw feedback loop lines (Shifted Right)
     let lastBoxX = startX + (numBoxes - 1) * boxSize + boxSize;
 
     c.beginPath();
@@ -55,7 +54,7 @@ function drawLFSRStructure() {
         c.rect(x, y, boxSize, boxSize);
         c.stroke()
 
-        drawBits(x, y, lfsrValues[i]); // Call drawBits with x, y, and bit value
+        drawBits(x, y, lfsrValues[i]);
     }
 
     // Draw XOR gates at specified positions
@@ -164,7 +163,6 @@ function initXorBits() {
 function calculateXORResult() {
     // Collect tap bits according to xorPositions
     let tapBits = xorPositions.map(pos => lfsrValues[lfsrValues.length - pos]);
-    console.log(tapBits)
     if (tapBits[counter] == movingBit){
         xorResult = 0;
         movingBit = 0;
@@ -183,7 +181,6 @@ function moveBits() {
     bits.clearRect(0, 0, canvas.width, canvas.height);
     drawLFSRStructure();
 
-    // Draw moving right bit
     drawBits(x, y, movingBit);
 
     // Animate XOR bits moving up
@@ -214,7 +211,6 @@ function moveBits() {
                 animateButton.disabled = false;
                 xorResult = calculateXORResult();
                 movingBit = xorResult;
-                console.log("XOR Result is now moving:", movingBit);
             
                 // Draw XOR result near arc (left of arc)
                 if (xorResult !== null) {
@@ -234,14 +230,11 @@ function moveBits() {
     } else if (phase ===4) {
         x += dx;
         if (x >= startX - 40) {
-            console.log("Animation completed!");
             paused = true;
             animateButton.disabled = false;
                 // Shift LFSR and insert XOR result and reset
             lfsrValues.pop();
             lfsrValues.unshift(xorResult);
-
-            console.log("New LFSR state:", lfsrValues);
             reset ();
         }
     }
@@ -265,8 +258,8 @@ function handleAnimationButton() {
     }
 }
 
+// reset animation state
 function reset() {
-    // reset animation state
     phase = 0;
     x = startX + (lfsrValues.length - 1) * boxSize;
     y = 250;
@@ -286,7 +279,7 @@ initXorBits();
 // Event Listeners
 document.getElementById("updateButton").addEventListener("click", () => {
     updateLFSRAndXOR();
-    initXorBits(); // Reset tap bits after updating
+    initXorBits();
 });
 
 document.getElementById("animateButton").addEventListener("click", handleAnimationButton);

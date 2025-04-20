@@ -19,7 +19,7 @@
             <div class="LFSRPopUp" id="LFSRPopUp">
                 <button class="close-btn" onclick="closePopUp('LFSR')">X</button>
                 <h2 class="blacktext">LFSR Description</h2>
-                <p class="blacktext">An LFSR is a shift register that uses a linear function (usually XOR) of previous bits to generate new bits. It's commonly used in cryptography, random number generation, and error checking.</p>
+                <p class="blacktext">An Linear Feedback Shift Register (LFSR) is a shift register that uses a linear function (usually XOR) of previous bits to generate new bits. It's commonly used in cryptography, random number generation, and error checking.</p>
                 <p class="blacktext">How it works (Steps):</p>
                 <p class="blacktext">1. Start with an initial binary value (called the seed).</p>
                 <p class="blacktext">2. Shift all bits to the right by one position.</p>
@@ -41,6 +41,19 @@
                 <p class="blacktext">3. Use the output as the "chaining value" for the next block.</p>
                 <p class="blacktext">4. Repeat: XOR the next plaintext block with the previous ciphertext.</p>    
                 <button id="GoToCBC">Proceed</button>
+            </div>
+        </div>
+        <div>            
+            <button onclick="openQuizPopUp()" class="QuizButton">Quiz</button>
+            <div class="QuizPopUp" id="QuizPopUp">
+                <button class="close-btn" onclick="closePopUp('Quiz')">X</button>
+                <h2 class="blacktext">Quiz Description</h2>
+                <b class="blacktext">It's time for a mini quiz!</b>
+                <p class="blacktext">Let's put what you have learned to the test!</p>
+                <p class="blacktext">There are 5 multiple choice questions on LFSR and CBC</p>
+                <p class="blacktext">Try your best to answer all the questions using the knowledge you have gained from the animations</p>
+                <p class="blacktext">Good Luck!</p>
+                <button id="GoToQuiz">Proceed</button>
             </div>
         </div>
     </div>

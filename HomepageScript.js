@@ -1,5 +1,6 @@
 let LFSRPopUp = document.getElementById("LFSRPopUp")
 let CBCPopUp = document.getElementById("CBCPopUp")
+let QuizPopUp = document.getElementById("QuizPopUp")
 let close = document.getElementById("close")
 
 function openLFSRPopUp (){
@@ -7,8 +8,11 @@ function openLFSRPopUp (){
 }
 
 function openCBCPopUp (){
-    console.log('hi')
     CBCPopUp.classList.add("open-CBCPopUp");
+}
+
+function openQuizPopUp (){
+    QuizPopUp.classList.add("open-QuizPopUp");
 }
 
 function closePopUp(type) {
@@ -16,6 +20,9 @@ function closePopUp(type) {
         LFSRPopUp.classList.remove("open-LFSRPopUp");
     } else if (type === 'CBC') {
         CBCPopUp.classList.remove("open-CBCPopUp");
+    } else if (type === 'Quiz'){
+        QuizPopUp.classList.remove("open-QuizPopUp");
+
     }
 }
 
@@ -41,7 +48,7 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 
-    // Navigate to Topics Page
+    // Navigate to HomePage
     document.getElementById("GoToLFSR").addEventListener("click", function() {
         anime({
             targets: "body",
@@ -68,16 +75,29 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 
-    // Logout function (Animate the button itself before redirecting)
-    document.getElementById("logout").addEventListener("click", function(event) {
+    document.getElementById("GoToQuiz").addEventListener("click", function() {
         anime({
-            targets: event.target, // Animates the logout button
+            targets: "body",
             opacity: 0,
-            scale: [1, 0.8], // Shrinks before redirect
+            translateX: [-50, 50],
             duration: 500,
             easing: "easeInOutQuad",
             complete: function() {
-                window.location.href = "index.html"; // Redirect after animation
+                window.location.href = "quiz.html"; 
+            }
+        });
+    });
+
+    // Logout
+    document.getElementById("logout").addEventListener("click", function(event) {
+        anime({
+            targets: event.target,
+            opacity: 0,
+            scale: [1, 0.8],
+            duration: 500,
+            easing: "easeInOutQuad",
+            complete: function() {
+                window.location.href = "index.html";
             }
         });
     });

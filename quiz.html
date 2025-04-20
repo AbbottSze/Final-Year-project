@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="Quiz.js" defer></script>
+</head>
+<nav class="top-half">
+    <h2 class="gradienttext h2">Quiz Time!</h2>
+    <button id="back">Main Page</button>
+</nav>
+<body>
+    <div class="background">
+        <div class="quiz-container">
+            <div id="quiz">
+            <b id="question" class="question, blacktext" style ="font-size: 25px;"></b>
+            <div id="options" class="options"></div>
+            <button id="nextBtn" style="display:none;">Next</button>
+            <div id="result" style="margin-top: 20px;"></div>
+            <button id="homeBtn" style="display:none;">Home</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

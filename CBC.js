@@ -46,7 +46,6 @@ function drawCBCStructure() {
     for (let i = 0; i < 5; i++) {
         value = CBCValues[i];
         if (value == null){
-            //console.log('hi')
             if (i == CBCValues.length){
                 value = 1;
             }
@@ -116,7 +115,6 @@ function drawBlock(x, y, value, padding) {
     c.closePath();
     c.stroke();
     if (value === undefined) {
-        //console.log('yo')
         drawBits(x + 20, y + 5 + blockSize / 2, '')}
     else if (padding == true) {
         drawBits(x + 20, y + 5 + blockSize / 2, value)
@@ -177,12 +175,9 @@ function Block1() {
     } else if (phase === 1) {
         // Draw XOR result near arc (left of arc)
         if (xorResult == null) {
-            //console.log('diu')
             paused = true;
             animateButton.disabled = false;
             xorResult = calculateXORResult();
-            console.log("XOR Result is now moving:", movingBit);
-            //console.log('hi')
             bits.fillStyle = "red";
             bits.fillText(`${xorResult}`, currentx + 5, currenty + 40);
             currenty += 40
@@ -199,7 +194,6 @@ function Block1() {
             reset1();
             drawCBCStructure();
         } else if (counter > CBCValues.length){
-            console.log("hi")
             drawCBCStructure();
             reset1();
             animateButton.disabled = true;
@@ -235,7 +229,6 @@ function Block2() {
     requestAnimationFrame(Block2);
     bits.clearRect(0, 0, canvas.width, canvas.height);
     drawCBCStructure();
-    console.log(iv);
 
     drawBits(currentx, currenty, movingBit);
     drawBits(ivx, ivy, ivBit);
@@ -244,31 +237,24 @@ function Block2() {
     }
 
     if (phase === 0) {
-        console.log('0')
         if (ivx < ivTargetx) {
             ivx += dx;}
         else {phase = 1}
     }
     if (phase === 1) {
-        console.log('1')
         ivy -= dy;
         if (ivy < ivTargety) {
             phase = 2;}
     } else if (phase === 2) {
-        console.log('2')
         ivx += dx;
         if (ivx > ivTargetx + 130) {
             phase = 3
         }
     } else if (phase === 3 ) {
-        console.log('3')
         if (xorResult == null) {
-            //console.log('diu')
             paused = true;
             animateButton.disabled = false;
             xorResult = calculateXORResult();
-            console.log("XOR Result is now moving:", movingBit);
-            //console.log('hi')
             bits.fillStyle = "red";
             bits.fillText(`${xorResult}`, currentx + 5, currenty + 40);
             currenty += 40
@@ -309,7 +295,6 @@ function reset2() {
     currentx = 930;
     currenty = 130;
     xorResult = null;
-    console.log(iv)
     animateButton.disabled = false;
 }
 
@@ -331,10 +316,7 @@ function hardreset() {
     currenty = 130;
     padding = false;
 
-    // Rebuild the entire structure (this also refills AllValues)
     drawCBCStructure();
-
-    // Now that AllValues exists, we can safely get the first bit
     movingBit = AllValues[pos];
     ivBit = [iv[pos]];
 
@@ -362,7 +344,6 @@ function handleAnimationButton() {
 document.getElementById("updateButton").addEventListener("click", () => {
     let CBCInput = document.getElementById("CBCInput").value;
     let ivInput = document.getElementById("IV").value;
-    console.log(ivInput)
     if (/^[01]{3,10}$/.test(CBCInput)) {
         if (/^0+$/.test(CBCInput)) {
             alert("CBC cannot be all zeros! Please enter a valid sequence.");
@@ -373,9 +354,7 @@ document.getElementById("updateButton").addEventListener("click", () => {
         alert("Please enter a valid binary sequence (0s and 1s, between 3-10 digits).");
         return;
     }
-    //ciphertexts = [];
     let newiv = ivInput.split('').map(Number);
-    console.log(newiv);
     if (/^[01]{5}$/.test(ivInput)){
         iv = newiv;
     } else if (newiv.length == 0) {

@@ -102,7 +102,7 @@ document.addEventListener("DOMContentLoaded", function() {
             easing: "easeInOutQuad",
             complete: function() {
                 alert("Login Successful!");
-                window.location.href = "homepage.html"; // Redirect to home page
+                window.location.href = "homepage.html";
             }
         });
     });
@@ -134,7 +134,7 @@ document.addEventListener("DOMContentLoaded", function() {
 //login
 document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("loginForm").addEventListener("submit", function (event) {
-        event.preventDefault(); // Prevent form submission
+        event.preventDefault();
 
         // Get user input
         const username = document.getElementById("username").value;
@@ -142,7 +142,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Example authentication check (replace with real validation)
         if (username === "admin" && password === "password123") {
-            // Animate form before redirecting
             anime({
                 targets: "#loginForm",
                 opacity: [1, 0],
@@ -150,7 +149,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 duration: 800,
                 easing: "easeInOutQuad",
                 complete: function () {
-                    window.location.href = "homepage.html"; // Redirect after animation
+                    window.location.href = "homepage.html";
                 }
             });
         } else {
