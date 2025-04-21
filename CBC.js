@@ -194,8 +194,8 @@ function Block1() {
             reset1();
             drawCBCStructure();
         } else if (counter > CBCValues.length){
-            drawCBCStructure();
             reset1();
+            drawCBCStructure();
             animateButton.disabled = true;
             return
         }   else if (CBCValues.length > 5) {
@@ -203,7 +203,8 @@ function Block1() {
                 drawCBCStructure();
                 reset2();
                 Block2();
-        }
+        }   
+        drawCBCStructure();
     }
 }
 
