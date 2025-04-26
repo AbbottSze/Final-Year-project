@@ -12,9 +12,10 @@ canvas.height = window.innerHeight * 0.7;
 // CBC encryption variables + initial values
 let blockSize = 50;
 let iv = [0,0,1,0,0];
-let CBCValues = [1,0,0,1];
+let CBCValues = [1,0,0,1,0,0,0];
 let AllValues = [];
 let ciphertexts = [];
+let Xortext = [];
 let processingIndex = null;
 let processing = false;
 let x = 100;
@@ -32,9 +33,9 @@ function drawCBCStructure() {
     c.textBaseline = "middle";
     c.fillText('IV', 110, 125);
     c.fillText('Plain Text', 450, 75);
-    c.fillText('Cipher Text', 450, 225);
+    c.fillText('Cipher Text', 375, 375);
     c.fillText('Block 1', 575, 25);
-
+    
     //draw iv block
     for (let i = 0; i < 5; i++) {
         drawBlock(x, 150, iv[i]);
@@ -56,16 +57,16 @@ function drawCBCStructure() {
         }
         AllValues.push(value);
         drawBlock(x, 100, value, padding);
-        drawBlock(x, 250, ciphertexts[i] , padding)
+        drawBlock(x, 225, Xortext[i] , padding)
+        drawBlock(x, 350, ciphertexts[i] , padding)
         x+=50;
     }
     drawLine(lastx +50, 175, lastx + 290, 175);
-    drawLine(lastx + 275, 150, lastx + 275, 250);
+    drawLine(lastx + 275, 150, lastx + 275, 225);
     drawXOR(lastx + 275)
     if (CBCValues.length > 5) {
         x = 800
         c.fillText('Plain Text', 825, 75);
-        c.fillText('Cipher Text', 825, 225);
         c.fillText('Block 2', 925, 25);
         for (let i = 0 ; i < 5; i++) {
             value = CBCValues[i + 5];
@@ -80,13 +81,14 @@ function drawCBCStructure() {
             }
             AllValues.push(value);
             drawBlock(x, 100, value, padding)
-            drawBlock(x, 250,ciphertexts[i+5], padding)
+            drawBlock(x, 225, Xortext[i+5], padding)
+            drawBlock(x, 350, ciphertexts[i+5], padding)
             x += 50
         }
-        drawLine(lastx + 400, 275, lastx + 450, 275);
-        drawLine(lastx + 450, 275, lastx + 450, 175);
+        drawLine(lastx + 400, 375, lastx + 450, 375);
+        drawLine(lastx + 450, 375, lastx + 450, 175);
         drawLine(lastx + 450, 175, lastx + 640, 175);
-        drawLine(lastx + 625, 150, lastx + 625, 250);
+        drawLine(lastx + 625, 150, lastx + 625, 225);
         drawXOR(lastx + 625)
         x = 100;
         padding = false;
@@ -123,6 +125,7 @@ function drawBlock(x, y, value, padding) {
     drawBits(x + 20, y + 5 + blockSize / 2, value)
     }
 }
+
 function drawLine(x1, y1, x2, y2) {
     c.beginPath();
     c.moveTo(x1, y1);
@@ -188,7 +191,7 @@ function Block1() {
         paused = true;
         pos += 1;
         animateButton.disabled = false;
-        ciphertexts.push(movingBit);
+        Xortext.push(movingBit);
         counter += 1;
         if (counter < 5) {
             reset1();
@@ -198,6 +201,9 @@ function Block1() {
             drawCBCStructure();
             animateButton.disabled = true;
             return
+
+
+
         }   else if (CBCValues.length > 5) {
                 // Automatically switch to Block2
                 drawCBCStructure();
@@ -205,8 +211,9 @@ function Block1() {
                 Block2();
         }   
         drawCBCStructure();
-    }
+    } 
 }
+
 
 function reset1() {
     movingBit = AllValues[pos];
@@ -267,7 +274,7 @@ function Block2() {
         pos += 1
         counter+=1
         animateButton.disabled = false;
-        ciphertexts.push(movingBit);
+        Xortext.push(movingBit);
         drawCBCStructure();
         reset2()
     }
@@ -284,11 +291,11 @@ function calculateXORResult() {
 
 function reset2() {
     movingBit = AllValues[pos];
-    iv.push(ciphertexts[pos-5]);
+    iv.push(Xortext[pos-5]);
     ivBit = [iv[pos]];
     phase = 0;
     ivx = 675;
-    ivy = 275;
+    ivy = 374;
     ivTargetx = 750;
     ivTargety = 180;
     startx = 930;
@@ -303,6 +310,7 @@ function hardreset() {
     pos = 0;
     counter = 0;
     phase = 0;
+    Xortext = [];
     ciphertexts = [];
     AllValues = [];
     paused = true;

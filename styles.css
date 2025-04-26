@@ -102,6 +102,7 @@ a:hover {
 
 .LFSRPopUp{
     position: absolute;
+    box-shadow: 5px 5px 5px grey;
     width: 400px;
     background-color: white;
     border-radius: 6px;
@@ -109,7 +110,7 @@ a:hover {
     left: 50%;
     transform: translate(-50%, -50%) scale(0.1);
     text-align: center;
-    padding: 0 30px 30px;
+    padding: 0 50px 50px;
     visibility: hidden;
     transition: transform 0.4s, top 0.4s;
 }
@@ -139,6 +140,7 @@ a:hover {
 
 .CBCPopUp{
     position: absolute;
+    box-shadow: 5px 5px 5px grey;
     width: 400px;
     background-color: white;
     border-radius: 6px;
@@ -146,7 +148,7 @@ a:hover {
     left: 50%;
     transform: translate(-50%, -50%) scale(0.1);
     text-align: center;
-    padding: 0 30px 30px;
+    padding: 0 50px 50px;
     visibility: hidden;
     transition: transform 0.4s, top 0.4s;
 }
@@ -176,6 +178,7 @@ a:hover {
 
 .QuizPopUp{
     position: absolute;
+    box-shadow: 5px 5px 5px grey;
     width: 400px;
     background-color: white;
     border-radius: 6px;
@@ -183,7 +186,7 @@ a:hover {
     left: 50%;
     transform: translate(-50%, -50%) scale(0.1);
     text-align: center;
-    padding: 0 30px 30px;
+    padding: 0 50px 50px;
     visibility: hidden;
     transition: transform 0.4s, top 0.4s;
 }
@@ -374,7 +377,7 @@ p {
 }
 
 /* Mobile Responsive Design */
-@media screen and (max-width: 400px) {
+/*@media screen and (max-width: 400px) {
     .container {
         width: 90%;
     }
@@ -382,7 +385,7 @@ p {
 
 @media only screen and (min-width: 768px) {
     /* Styles for desktop view */
-    body {
+    /*body {
         font-size: 16px;
     }
 }
