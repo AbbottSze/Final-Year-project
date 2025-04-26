@@ -10,12 +10,17 @@
 </head>
 <nav class="top-half">
     <h2 class="gradienttext h2">Welcome, User!</h2>
-    <button id="logout">Logout</button>
+    <button id="logout" class="blacktext">Logout</button>
 </nav>
 <body>
     <div class="background">
+        <div class="intro-container">
+            <h2 class="blacktext">Welcome to the Cybersecurity Sandbox!</h2>
+            <p class="blacktext">Step into a safe, interactive world where you can explore, learn, and experiment with real cyber security concepts without the real-world risks. This animated sandbox is your playground for cybersecurity mastery!</p>
+        </div>
+        <img src="image_1.png" alt="image_1" width="125" height="125" style="transform: translate(60px, 75px);">
         <div>
-            <button onclick="openLFSRPopUp()" class="LFSRButton">LFSR Stream Cipher</button>
+            <button onclick="openLFSRPopUp()" class="LFSRButton blacktext">LFSR Stream Cipher</button>
             <div class="LFSRPopUp" id="LFSRPopUp">
                 <button class="close-btn" onclick="closePopUp('LFSR')">X</button>
                 <h2 class="blacktext">LFSR Description</h2>
@@ -28,9 +33,10 @@
                 <p class="blacktext">5. Repeat the process for each new bit.</p> 
                 <button id="GoToLFSR">Proceed</button>
             </div>
+            <p class="blacktext" stlye="top: 400px">Difficulty</p>
         </div>
         <div>            
-            <button onclick="openCBCPopUp()" class="CBCButton">CBC Block Cipher</button>
+            <button onclick="openCBCPopUp()" class="CBCButton blacktext">CBC Block Cipher</button>
             <div class="CBCPopUp" id="CBCPopUp">
                 <button class="close-btn" onclick="closePopUp('CBC')">X</button>
                 <h2 class="blacktext">CBC Description</h2>
@@ -44,7 +50,7 @@
             </div>
         </div>
         <div>            
-            <button onclick="openQuizPopUp()" class="QuizButton">Quiz</button>
+            <button onclick="openQuizPopUp()" class="QuizButton blacktext">Quiz</button>
             <div class="QuizPopUp" id="QuizPopUp">
                 <button class="close-btn" onclick="closePopUp('Quiz')">X</button>
                 <h2 class="blacktext">Quiz Description</h2>

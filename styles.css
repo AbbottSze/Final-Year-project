@@ -53,6 +53,19 @@ a:hover {
 
 /*Homepage*/
 
+.intro-container {
+    position: absolute;
+    top: 15%;
+    left: 50%;
+    width: 60%;
+    transform: translateX(-50%);
+    text-align: center;
+    background: white;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+}
+
 /*Background*/
 
 #top-half {
@@ -76,7 +89,7 @@ a:hover {
 /*Logout button*/
 #logout {
     position: absolute;
-    right: 10%;
+    right: 3%;
     top: 10px;
     width: 20%
 }
@@ -126,8 +139,8 @@ a:hover {
     position: absolute;
     width: 200px;
     height: 175px;
-    left: 20%;
-    top: 20%;
+    left: 15%;
+    top: 50%;
 }
 
 /*CBC*/
@@ -164,8 +177,8 @@ a:hover {
     position: absolute;
     width:200px;
     height: 175px;
-    left: 45%;
-    top: 20%;
+    left: 42%;
+    top: 50%;
 }
 
 /*quiz*/
@@ -202,8 +215,8 @@ a:hover {
     position: absolute;
     width:200px;
     height: 175px;
-    left: 70%;
-    top: 20%;
+    left: 69%;
+    top: 50%;
 }
 
 /*LFSR*/
@@ -281,7 +294,7 @@ body, html {
 
 /* Background */
 .background {
-    background-image: linear-gradient(to bottom left, rgb(0, 185, 185),#2ad6b4);
+    background-color: #2fb79c7c;
     height: 100vh;
     width: 100%;
     background-repeat: no-repeat;
@@ -299,13 +312,14 @@ body, html {
 .blacktext {
     font-family: Helvetica;
     color: black;
+    font-size: 20px;
 }
 
 /* gradient text */
 .gradienttext {
     position: relative;
     font-family: Helvetica;
-    background: linear-gradient(rgb(0, 185, 185),#2ad6b4);
+    background: #48c7dbf4;
     background-clip: text;
     -webkit-text-fill-color: transparent;
 }
@@ -326,8 +340,8 @@ input:focus {
 button {
     width: 50%;
     padding: 12px;
-    background: linear-gradient(to bottom left, rgb(0, 199, 199),#2ad6b4);
-    color: white;
+    background: #48c7dbac;
+    color: black;
     border-color: white;
     border-style: solid;
     border-radius: 5px;
