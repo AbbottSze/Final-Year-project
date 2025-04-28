@@ -7,7 +7,7 @@ let plaintextInput = document.getElementById("CBCInput");
 let ivInput = document.getElementById("IV");
 
 canvas.width = window.innerWidth * 0.9;
-canvas.height = window.innerHeight * 0.7;
+canvas.height = window.innerHeight * 0.65;
 
 // CBC encryption variables + initial values
 let blockSize = 50;
@@ -403,4 +403,63 @@ document.getElementById("back").addEventListener("click", function() {
             window.location.href = "homepage.html"; 
         }
     });
+});
+
+var container = document.querySelector(".text");
+
+var speed = 40
+
+var textLines = [
+   {speed, string: "What are the yellow bits at the end? Click me to find out!" },
+];
+
+
+var characters = [];
+function init() {
+    textLines.forEach((line, index) => {
+        if (index < textLines.length - 1) {
+           line.string += " "; //Add a space between lines
+        }
+     
+        line.string.split("").forEach((character) => {
+           var span = document.createElement("span");
+           span.textContent = character;
+           container.appendChild(span);
+           characters.push({
+              span: span,
+              isSpace: character === " " && !line.pause,
+              delayAfter: line.speed,
+              classes: line.classes || []
+           });
+        });
+     });
+}
+
+function revealOneCharacter(list) {
+   var next = list.splice(0, 1)[0];
+   next.span.classList.add("revealed");
+   next.classes.forEach((c) => {
+      next.span.classList.add(c);
+   });
+   var delay = next.isSpace && !next.pause ? 0 : next.delayAfter;
+
+   if (list.length > 0) {
+      setTimeout(function () {
+         revealOneCharacter(list);
+      }, delay);
+   }
+}
+
+//Kick it off
+setTimeout(() => {
+    init();
+   revealOneCharacter(characters);   
+}, 600)
+
+document.getElementById("hint").addEventListener("click", function (){
+    container.innerHTML = ""
+    textLines = [{speed, string: "In CBC mode, extra bits (padding) are added to the last block to make it the correct block size, ensuring the cipher processes the data correctly. Padding is removed during decryption."}]
+    init();
+    revealOneCharacter(characters);
+    hint.disabled = true
 });

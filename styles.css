@@ -66,6 +66,26 @@ a:hover {
     box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
 }
 
+.intro-container:before {
+    content: '';
+    position: absolute;
+    top: 80%;
+    left: -10px;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-right: 10px solid white;
+}
+
+.text span {
+    opacity: 0;
+ }
+ .text span.revealed {
+    opacity: 1;
+ }
+
 /*Background*/
 
 #top-half {
@@ -106,6 +126,12 @@ a:hover {
 }
 
 /*LFSR*/
+.LFSRDifficulty {
+    position: absolute;
+    top: 75%;
+    right: 73%;
+}
+
 #GoToLFSR {
     position: relative;
     width: 100px;
@@ -123,9 +149,13 @@ a:hover {
     left: 50%;
     transform: translate(-50%, -50%) scale(0.1);
     text-align: center;
-    padding: 0 50px 50px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 50px;
+    padding-right: 50px;
     visibility: hidden;
     transition: transform 0.4s, top 0.4s;
+    border: dashed 3px #48c7dbac;
 }
 
 .open-LFSRPopUp{
@@ -161,9 +191,13 @@ a:hover {
     left: 50%;
     transform: translate(-50%, -50%) scale(0.1);
     text-align: center;
-    padding: 0 50px 50px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 50px;
+    padding-right: 50px;
     visibility: hidden;
     transition: transform 0.4s, top 0.4s;
+    border: dashed 3px #48c7dbac;
 }
 
 .open-CBCPopUp{
@@ -179,6 +213,12 @@ a:hover {
     height: 175px;
     left: 42%;
     top: 50%;
+}
+
+.CBCDifficulty {
+    position: absolute;
+    top: 75%;
+    right: 43%;
 }
 
 /*quiz*/
@@ -199,9 +239,13 @@ a:hover {
     left: 50%;
     transform: translate(-50%, -50%) scale(0.1);
     text-align: center;
-    padding: 0 50px 50px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 50px;
+    padding-right: 50px;
     visibility: hidden;
     transition: transform 0.4s, top 0.4s;
+    border: dashed 3px #48c7dbac;
 }
 
 .open-QuizPopUp{
@@ -219,7 +263,7 @@ a:hover {
     top: 50%;
 }
 
-/*LFSR*/
+/*LFSR Animation*/
 
 canvas {
     position: absolute;
@@ -258,7 +302,7 @@ canvas {
     right: 50px;
     top: 175px;
     width: 200px;
-    height: 75px;
+    height: 50px;
     padding: 80px;
     background: rgb(255, 255, 255);
     border-radius: 10px;
@@ -267,7 +311,7 @@ canvas {
 
 #animateButton {
     position:absolute;
-    top: 80%;
+    top: 72%;
     right: 100px;
     width: 200px;
 }
@@ -283,6 +327,46 @@ canvas {
     width: 20%;
 }
 
+.Hint{
+    position: absolute;
+    transform: translate(675px, 430px);
+    width: 150px; 
+    height: 150px;
+    background: transparent;
+    border: transparent;
+}
+
+.Hint:hover{
+    background: transparent;
+}
+
+.hintcontainer {
+    position: absolute;
+    top: 80%;
+    left: 80%;
+    width: 28%;
+    transform: translateX(-50%);
+    text-align: center;
+    background: white;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.hintcontainer:before {
+    content: '';
+    position: absolute;
+    top: 30%;
+    left: -10px;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-right: 10px solid white;
+}
+
+
 /*Universal*/
 
 body, html {
@@ -291,6 +375,10 @@ body, html {
     width: 100%;
     overflow-x: hidden; /* Prevents horizontal scrolling */
 }
+
+.disabled {
+    pointer-events: none;
+  }
 
 /* Background */
 .background {
@@ -337,8 +425,9 @@ input:focus {
 }
 
 /* Buttons */
+
 button {
-    width: 50%;
+    width: 50;
     padding: 12px;
     background: #48c7dbac;
     color: black;

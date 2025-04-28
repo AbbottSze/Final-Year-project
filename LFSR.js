@@ -4,8 +4,8 @@ var bits = canvas.getContext('2d');
 const animateButton = document.getElementById("animateButton");
 
 
-canvas.width = window.innerWidth * 0.9;
-canvas.height = window.innerHeight * 0.7;
+canvas.width = window.innerWidth * 0.7;
+canvas.height = window.innerHeight * 0.6;
 
 c.strokeStyle = 'black';
 bits.strokeStyle = 'black';
@@ -121,8 +121,8 @@ function updateLFSRAndXOR() {
     }
 
     // Check if all positions are within range
-    if (positions.some(pos => pos < 2 || pos > lfsrValues.length)) {
-        alert(`XOR positions must be between 2 and ${lfsrValues.length}`);
+    if (positions.some(pos => pos < 1 || pos > lfsrValues.length)) {
+        alert(`XOR positions must be between 1 and ${lfsrValues.length}`);
         return;
     }
 
@@ -296,4 +296,63 @@ document.getElementById("back").addEventListener("click", function() {
             window.location.href = "homepage.html"; 
         }
     });
+});
+
+var container = document.querySelector(".text");
+
+var speed = 40
+
+var textLines = [
+   {speed, string: "Why can't the LFSR bits be all 0s? Click me to find out!" },
+];
+
+
+var characters = [];
+function init() {
+    textLines.forEach((line, index) => {
+        if (index < textLines.length - 1) {
+           line.string += " "; //Add a space between lines
+        }
+     
+        line.string.split("").forEach((character) => {
+           var span = document.createElement("span");
+           span.textContent = character;
+           container.appendChild(span);
+           characters.push({
+              span: span,
+              isSpace: character === " " && !line.pause,
+              delayAfter: line.speed,
+              classes: line.classes || []
+           });
+        });
+     });
+}
+
+function revealOneCharacter(list) {
+   var next = list.splice(0, 1)[0];
+   next.span.classList.add("revealed");
+   next.classes.forEach((c) => {
+      next.span.classList.add(c);
+   });
+   var delay = next.isSpace && !next.pause ? 0 : next.delayAfter;
+
+   if (list.length > 0) {
+      setTimeout(function () {
+         revealOneCharacter(list);
+      }, delay);
+   }
+}
+
+//Kick it off
+setTimeout(() => {
+    init();
+   revealOneCharacter(characters);   
+}, 600)
+
+document.getElementById("hint").addEventListener("click", function (){
+    container.innerHTML = ""
+    textLines = [{speed, string: "If all the bits become 0, the LFSR will stay stuck at 0 forever — because XOR of zeros is still zero, and it will keep shifting zeros endlessly. This is called a 'lock-up' state."}]
+    init();
+    revealOneCharacter(characters);
+    hint.disabled = true
 });
