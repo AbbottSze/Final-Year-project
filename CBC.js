@@ -6,8 +6,8 @@ const updateButton = document.getElementById("updateButton");
 let plaintextInput = document.getElementById("CBCInput");
 let ivInput = document.getElementById("IV");
 
-canvas.width = window.innerWidth * 0.9;
-canvas.height = window.innerHeight * 0.65;
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight * 0.6;
 
 // CBC encryption variables + initial values
 let blockSize = 50;
@@ -20,7 +20,8 @@ let processingIndex = null;
 let processing = false;
 let x = 100;
 let lastx = x + (blockSize *4)
-let padding = false
+let padding = false;
+let AESResult = null;
 
 // Draw CBC structure with connecting lines
 function drawCBCStructure() {
@@ -35,10 +36,15 @@ function drawCBCStructure() {
     c.fillText('Plain Text', 450, 75);
     c.fillText('Cipher Text', 375, 375);
     c.fillText('Block 1', 575, 25);
+    drawBlock(300, 285, "AES", padding);
+    drawLine(450, 250, 325, 250);
+    drawLine(325, 250, 325, 285);
+    drawLine(350, 310, 575, 310);
+    drawLine(575, 310, 575, 350);
     
     //draw iv block
     for (let i = 0; i < 5; i++) {
-        drawBlock(x, 150, iv[i]);
+        drawBlock(x, 150, iv[i],padding);
         x += 50;
     }
     x += 100;
@@ -68,6 +74,11 @@ function drawCBCStructure() {
         x = 800
         c.fillText('Plain Text', 825, 75);
         c.fillText('Block 2', 925, 25);
+        drawBlock(1100, 285, "AES", padding);
+        drawLine(1050, 250, 1125, 250);
+        drawLine(1125, 250, 1125, 285);
+        drawLine(1100, 310, 925, 310);
+        drawLine(925, 310, 925, 350);
         for (let i = 0 ; i < 5; i++) {
             value = CBCValues[i + 5];
             if (value == null){
@@ -197,23 +208,27 @@ function Block1() {
             reset1();
             drawCBCStructure();
         } else if (counter > CBCValues.length){
-            reset1();
-            drawCBCStructure();
+            paused = true;
+            counter = 0;
+            pos = 0;
+            animateButton.disabled = false;
+            // drawCBCStructure();
+            block_1_AESReset();
+            AESBlock1();
             animateButton.disabled = true;
             return
-
-
-
         }   else if (CBCValues.length > 5) {
-                // Automatically switch to Block2
-                drawCBCStructure();
-                reset2();
-                Block2();
+                paused = true;
+                counter = 0;
+                pos = 0;
+                animateButton.disabled = false;
+                //drawCBCStructure();
+                block_1_AESReset();
+                AESBlock1();
         }   
         drawCBCStructure();
     } 
 }
-
 
 function reset1() {
     movingBit = AllValues[pos];
@@ -229,6 +244,76 @@ function reset1() {
     currenty = 130;
     xorResult = null;
     animateButton.disabled = false;
+}
+
+function block_1_AESReset() {
+    movingBit = Xortext[pos];
+    phase = 0;
+    currentx = 400;
+    currenty = 225;
+    AESResult = null;
+    animateButton.disabled = false;
+}
+
+function AESBlock1() {
+    console.log("dllm")
+    if (paused) return;
+    requestAnimationFrame(Block1);
+    bits.clearRect(0, 0, canvas.width, canvas.height);
+    drawCBCStructure();
+
+    // Draw moving right bit
+    drawBits(currentx, currenty, movingBit);
+
+    if (currentx >= 300) {
+        console.log("hi")
+        currentx -= dx;
+    }
+
+    // Motion phases
+    if (phase === 0) {
+        console.log("0")
+        if (ivx < ivTargetx) {
+            ivx += dx;}
+        else {phase = 1}
+    } else if (phase === 1) {
+        console.log("1")
+        // Draw XOR result near arc (left of arc)
+        if (xorResult == null) {
+            paused = true;
+            animateButton.disabled = false;
+            xorResult = calculateXORResult();
+            bits.fillStyle = "red";
+            bits.fillText(`${xorResult}`, currentx + 5, currenty + 40);
+            currenty += 40
+        }
+        currenty += dy;
+        if (currenty >= 250) {phase = 2};
+    } else if (phase === 2) {
+        console.log("2")
+        paused = true;
+        pos += 1;
+        animateButton.disabled = false;
+        Xortext.push(movingBit);
+        counter += 1;
+        if (counter < 5) {
+            reset1();
+            drawCBCStructure();
+        } else if (counter > CBCValues.length){
+            counter = 0;
+            pos = 0;
+            block_1_AESReset();
+            drawCBCStructure();
+            animateButton.disabled = true;
+            return
+        }   else if (CBCValues.length > 5) {
+                // Automatically switch to Block2
+                drawCBCStructure();
+                reset2();
+                Block2();
+        }   
+        drawCBCStructure();
+    } 
 }
 
 function Block2() {
