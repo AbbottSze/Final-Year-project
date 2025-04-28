@@ -263,6 +263,15 @@ a:hover {
     top: 50%;
 }
 
+.leaderboard {
+    display: flex;
+    flex-direction: column; /* Stack the leaderboard entries vertically */
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-top: 20px;
+}
+
 /*LFSR Animation*/
 
 canvas {
@@ -457,7 +466,7 @@ p {
 
 .quiz-container { 
     position: absolute;
-    top: 30%;
+    top: 20%;
     left: 50%;
     width: 500px;
     transform: translateX(-50%);
