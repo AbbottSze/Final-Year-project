@@ -8,7 +8,7 @@ let plaintextInput = document.getElementById("CBCInput");
 let ivInput = document.getElementById("IV");
 
 canvas.width = window.innerWidth;
-canvas.height = window.innerHeight * 0.72;
+canvas.height = window.innerHeight * 0.69;
 
 // CBC encryption variables + initial values
 let blockSize = 50;
