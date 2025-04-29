@@ -358,7 +358,7 @@ canvas {
 
 #animateButton {
     position:absolute;
-    top: 74%;
+    top: 80%;
     right: 100px;
     width: 200px;
 }
@@ -389,7 +389,7 @@ canvas {
 
 .hintcontainer {
     position: absolute;
-    top: 85%;
+    top: 90%;
     left: 80%;
     width: 28%;
     transform: translateX(-50%);
