@@ -3,6 +3,7 @@ var c = canvas.getContext('2d');
 var bits = canvas.getContext('2d');
 const animateButton = document.getElementById("animateButton");
 const updateButton = document.getElementById("updateButton");
+const randomButton = document.getElementById("RandomIV")
 let plaintextInput = document.getElementById("CBCInput");
 let ivInput = document.getElementById("IV");
 
@@ -21,7 +22,8 @@ let processing = false;
 let x = 100;
 let lastx = x + (blockSize *4)
 let padding = false;
-let AESResult = null;
+let AES = 0;
+let encryptedbit = 0;
 
 // Draw CBC structure with connecting lines
 function drawCBCStructure() {
@@ -207,24 +209,12 @@ function Block1() {
         if (counter < 5) {
             reset1();
             drawCBCStructure();
-        } else if (counter > CBCValues.length){
+        } else {
+            AES = 1
             paused = true;
-            counter = 0;
-            pos = 0;
             animateButton.disabled = false;
-            // drawCBCStructure();
             block_1_AESReset();
             AESBlock1();
-            animateButton.disabled = true;
-            return
-        }   else if (CBCValues.length > 5) {
-                paused = true;
-                counter = 0;
-                pos = 0;
-                animateButton.disabled = false;
-                //drawCBCStructure();
-                block_1_AESReset();
-                AESBlock1();
         }   
         drawCBCStructure();
     } 
@@ -247,78 +237,120 @@ function reset1() {
 }
 
 function block_1_AESReset() {
-    movingBit = Xortext[pos];
-    phase = 0;
+    phase = 0
     currentx = 400;
     currenty = 225;
-    AESResult = null;
+    animateButton.disabled = false;
+}
+
+function block_2_AESReset() {
+    phase = 0
+    currentx = 1000;
+    currenty = 225;
     animateButton.disabled = false;
 }
 
 function AESBlock1() {
-    console.log("dllm")
     if (paused) return;
-    requestAnimationFrame(Block1);
+    requestAnimationFrame(AESBlock1);
     bits.clearRect(0, 0, canvas.width, canvas.height);
     drawCBCStructure();
+    animateButton.disabled = true;
 
-    // Draw moving right bit
-    drawBits(currentx, currenty, movingBit);
-
-    if (currentx >= 300) {
-        console.log("hi")
-        currentx -= dx;
-    }
-
-    // Motion phases
+    // Draw moving block
     if (phase === 0) {
-        console.log("0")
-        if (ivx < ivTargetx) {
-            ivx += dx;}
-        else {phase = 1}
+        drawBlock(currentx, currenty, "XOR", padding);
+        if (currentx > 325) {
+            currentx -= dx; // Move left
+        } else {
+            phase = 1; // When reaches AES block, switch to phase 1
+        }
     } else if (phase === 1) {
-        console.log("1")
-        // Draw XOR result near arc (left of arc)
-        if (xorResult == null) {
+        drawBlock(currentx, currenty, "XOR", padding);
+        if (currenty < 275) {
+            currenty += dy; // Move down into AES
+        } else {
+            phase = 2;
+        }
+    } else if (phase === 2) {
+        drawBlock(currentx, currenty, "Cipher", padding);
+        if (currentx < 575){
+            currentx += dx
+        } else {phase = 3}
+    } else if (phase === 3) {
+        drawBlock(currentx, currenty, "Cipher", padding);
+        if (currenty < 350){
+            currenty += dy
+        } else {phase = 4}
+    } else if (phase === 4){
+        for (i = 0; i < 5; i++){
+            encryptAESBlock()
+        }
+        if (CBCValues.length > 5) {
+            drawCBCStructure();
             paused = true;
             animateButton.disabled = false;
-            xorResult = calculateXORResult();
-            bits.fillStyle = "red";
-            bits.fillText(`${xorResult}`, currentx + 5, currenty + 40);
-            currenty += 40
-        }
-        currenty += dy;
-        if (currenty >= 250) {phase = 2};
-    } else if (phase === 2) {
-        console.log("2")
-        paused = true;
-        pos += 1;
-        animateButton.disabled = false;
-        Xortext.push(movingBit);
-        counter += 1;
-        if (counter < 5) {
-            reset1();
+            AES = 0; 
+            reset2();
+            Block2();
+        } else {
             drawCBCStructure();
-        } else if (counter > CBCValues.length){
-            counter = 0;
-            pos = 0;
-            block_1_AESReset();
-            drawCBCStructure();
+            paused = true;
             animateButton.disabled = true;
-            return
-        }   else if (CBCValues.length > 5) {
-                // Automatically switch to Block2
-                drawCBCStructure();
-                reset2();
-                Block2();
-        }   
+        }
+    }
+}
+
+function AESBlock2() {
+    if (paused) return;
+    requestAnimationFrame(AESBlock2);
+    bits.clearRect(0, 0, canvas.width, canvas.height);
+    drawCBCStructure();
+    animateButton.disabled = true;
+
+    // Draw moving block
+    if (phase === 0) {
+        drawBlock(currentx, currenty, "XOR", padding);
+        if (currentx < 1100) {
+            currentx += dx; // Move left
+        } else {
+            phase = 1; // When reaches AES block, switch to phase 1
+        }
+    } else if (phase === 1) {
+        drawBlock(currentx, currenty, "XOR", padding);
+        if (currenty < 275) {
+            currenty += dy; // Move down into AES
+        } else {
+            phase = 2;
+        }
+    } else if (phase === 2) {
+        drawBlock(currentx, currenty, "Cipher", padding);
+        if (currentx > 900){
+            currentx -= dx
+        } else {phase = 3}
+    } else if (phase === 3) {
+        drawBlock(currentx, currenty, "Cipher", padding);
+        if (currenty < 350){
+            currenty += dy
+        } else {phase = 4}
+    } else if (phase === 4){
+        for (i = 0; i < 5; i++){
+            encryptAESBlock()
+        }
         drawCBCStructure();
-    } 
+        paused = true;
+        animateButton.disabled = true;
+    }
+}
+
+function encryptAESBlock() {
+    encryptedbit = Math.random() > 0.5 ? 1 : 0;
+    ciphertexts.push(encryptedbit)
+    drawCBCStructure();
 }
 
 function Block2() {
     if (paused) return;
-    drawBits(ivx, ivy, ivBit);
     requestAnimationFrame(Block2);
     bits.clearRect(0, 0, canvas.width, canvas.height);
     drawCBCStructure();
@@ -328,7 +360,6 @@ function Block2() {
     if (currenty <= starty + 25) {
         currenty += dy;
     }
-
     if (phase === 0) {
         if (ivx < ivTargetx) {
             ivx += dx;}
@@ -348,6 +379,7 @@ function Block2() {
             paused = true;
             animateButton.disabled = false;
             xorResult = calculateXORResult();
+            Xortext.push(movingBit);
             bits.fillStyle = "red";
             bits.fillText(`${xorResult}`, currentx + 5, currenty + 40);
             currenty += 40
@@ -355,13 +387,21 @@ function Block2() {
         currenty += dy;
         if (currenty >= 250) {phase = 4};
     } else if (phase === 4) {
-        paused = true;
-        pos += 1
-        counter+=1
-        animateButton.disabled = false;
-        Xortext.push(movingBit);
-        drawCBCStructure();
-        reset2()
+        if (counter < 10) {
+            paused = true;
+            pos += 1
+            counter+=1
+            if (counter < 10) {
+                reset2();
+                drawCBCStructure();
+            } else {
+                AES = 2
+                paused = true;
+                animateButton.disabled = false;
+                block_2_AESReset();
+                AESBlock2();
+            }   
+        }
     }
 }
 
@@ -376,7 +416,7 @@ function calculateXORResult() {
 
 function reset2() {
     movingBit = AllValues[pos];
-    iv.push(Xortext[pos-5]);
+    iv.push(ciphertexts[pos-5]);
     ivBit = [iv[pos]];
     phase = 0;
     ivx = 675;
@@ -392,6 +432,7 @@ function reset2() {
 }
 
 function hardreset() {
+    AES = 0
     pos = 0;
     counter = 0;
     phase = 0;
@@ -409,21 +450,27 @@ function hardreset() {
     currentx = 585;
     currenty = 130;
     padding = false;
-
     drawCBCStructure();
     movingBit = AllValues[pos];
     ivBit = [iv[pos]];
-
     animateButton.disabled = false;
 }
 
 // Control button handler
 function handleAnimationButton() {
-    if (counter < 5) {
+    if (AES == 1){
+        paused = false;
+        AESBlock1();
+    } else if (AES == 2){
+        paused = false;
+        AESBlock2();
+    } else if (counter < 5) {
         if (paused) {
             paused = false;
             animateButton.disabled = true;
-            Block1();
+            if (Xortext.length < 5){
+                Block1();
+            }
         }
     } else if (counter < 10 && CBCValues.length > 5) {
         if (paused) {
@@ -548,3 +595,20 @@ document.getElementById("hint").addEventListener("click", function (){
     revealOneCharacter(characters);
     hint.disabled = true
 });
+
+
+//AES Pop up
+let AESPopUp = document.getElementById("AESPopUp")
+function openAESPopUp () {
+    animateButton.disabled = true;
+    updateButton.disabled = true;
+    randomButton.disabled = true;
+    AESPopUp.classList.add("open-AESPopUp");
+}
+
+function closePopUp(AES) {
+    animateButton.disabled = false;
+    updateButton.disabled = false;
+    randomButton.disabled = false;
+    AESPopUp.classList.remove("open-AESPopUp");
+}

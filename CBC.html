@@ -24,6 +24,14 @@
             <button id="updateButton">Update</button>
         </div>
         <button id="animateButton">Animate</button>
+        <button onclick="openAESPopUp()" id="AESImage" class="AES" style="left: 300px; top: 355px;"></button>
+        <button onclick="openAESPopUp()" id="AESImage" class="AES" style="left: 1100px; top: 355px;"></button>
+        <div class="AESPopUp" id="AESPopUp">
+            <button class="close-btn" onclick="closePopUp('AES')">X</button>
+            <h2 class="blacktext">AES Description</h2>
+            <p class="blacktext">AES (Advanced Encryption Standard) is a symmetric encryption algorithm, it offers strong protection with key sizes of 128, 192, or 256 bits.</p>
+            <img src="image_2.png" t="image_2">
+        </div>
         <img src="image_1.png" t="image_1" width="150" height="150" style="position: absolute; transform: translate(675px, 430px);">
         <button id="hint" class="Hint"></button>
     </div>

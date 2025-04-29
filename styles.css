@@ -221,6 +221,44 @@ a:hover {
     right: 43%;
 }
 
+.AES {
+    position: absolute;
+    width: 50px; 
+    height: 50px;
+    background: transparent;
+    border: transparent;
+    z-index: 100;
+}
+
+.AES:hover{
+    background: transparent;
+}
+
+.AESPopUp{
+    position: absolute;
+    box-shadow: 5px 5px 5px grey;
+    width: 400px;
+    background-color: white;
+    border-radius: 6px;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.1);
+    text-align: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 50px;
+    padding-right: 50px;
+    visibility: hidden;
+    transition: transform 0.4s, top 0.4s;
+    border: dashed 3px #48c7dbac;
+}
+
+.open-AESPopUp{
+    visibility: visible;
+    top: 50%;
+    transform: translate(-50%, -50%) scale(1);
+    z-index: 1;
+}
+
 /*quiz*/
 #GoToQuiz {
     position: relative;
