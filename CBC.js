@@ -379,7 +379,6 @@ function Block2() {
             paused = true;
             animateButton.disabled = false;
             xorResult = calculateXORResult();
-            Xortext.push(movingBit);
             bits.fillStyle = "red";
             bits.fillText(`${xorResult}`, currentx + 5, currenty + 40);
             currenty += 40
@@ -391,6 +390,7 @@ function Block2() {
             paused = true;
             pos += 1
             counter+=1
+            Xortext.push(movingBit);
             if (counter < 10) {
                 reset2();
                 drawCBCStructure();
@@ -402,6 +402,7 @@ function Block2() {
                 AESBlock2();
             }   
         }
+        drawCBCStructure();
     }
 }
 
