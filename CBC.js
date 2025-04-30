@@ -6,6 +6,7 @@ const updateButton = document.getElementById("updateButton");
 const randomButton = document.getElementById("RandomIV")
 let plaintextInput = document.getElementById("CBCInput");
 let ivInput = document.getElementById("IV");
+let keyx = 150;
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight * 0.69;
@@ -43,6 +44,13 @@ function drawCBCStructure() {
     drawLine(325, 250, 325, 285);
     drawLine(350, 310, 575, 310);
     drawLine(575, 310, 575, 350);
+    drawBlock(150, 285,"Key", padding)
+    drawLine(200, 310, 300, 310)
+    bits.font = "20px Helvetica";
+    bits.textAlign = "left";
+    bits.textBaseline = "middle";
+    bits.fillText("-Click on AES to find out more", 30, 410);
+    bits.fillText("-Yellow bits = Padding", 30, 430);
     
     //draw iv block
     for (let i = 0; i < 5; i++) {
@@ -81,6 +89,8 @@ function drawCBCStructure() {
         drawLine(1125, 250, 1125, 285);
         drawLine(1100, 310, 925, 310);
         drawLine(925, 310, 925, 350);
+        drawBlock(1200, 285,"Key", padding)
+        drawLine(1200, 310, 1150, 310)
         for (let i = 0 ; i < 5; i++) {
             value = CBCValues[i + 5];
             if (value == null){
@@ -240,6 +250,7 @@ function block_1_AESReset() {
     phase = 0
     currentx = 400;
     currenty = 225;
+    keyx = 150;
     animateButton.disabled = false;
 }
 
@@ -247,6 +258,7 @@ function block_2_AESReset() {
     phase = 0
     currentx = 1000;
     currenty = 225;
+    keyx = 1200;
     animateButton.disabled = false;
 }
 
@@ -257,9 +269,13 @@ function AESBlock1() {
     drawCBCStructure();
     animateButton.disabled = true;
 
+    if (keyx < 300) {
+        keyx += dx
+    }
     // Draw moving block
     if (phase === 0) {
         drawBlock(currentx, currenty, "XOR", padding);
+        drawBlock(keyx, 285, "Key", padding);
         if (currentx > 325) {
             currentx -= dx; // Move left
         } else {
@@ -267,6 +283,7 @@ function AESBlock1() {
         }
     } else if (phase === 1) {
         drawBlock(currentx, currenty, "XOR", padding);
+        drawBlock(keyx, 285, "Key", padding);
         if (currenty < 275) {
             currenty += dy; // Move down into AES
         } else {
@@ -283,9 +300,7 @@ function AESBlock1() {
             currenty += dy
         } else {phase = 4}
     } else if (phase === 4){
-        for (i = 0; i < 5; i++){
             encryptAESBlock()
-        }
         if (CBCValues.length > 5) {
             drawCBCStructure();
             paused = true;
@@ -307,10 +322,13 @@ function AESBlock2() {
     bits.clearRect(0, 0, canvas.width, canvas.height);
     drawCBCStructure();
     animateButton.disabled = true;
-
+    if (keyx > 1100) {
+        keyx -= dx
+    }
     // Draw moving block
     if (phase === 0) {
         drawBlock(currentx, currenty, "XOR", padding);
+        drawBlock(keyx, 285, "Key", padding);
         if (currentx < 1100) {
             currentx += dx; // Move left
         } else {
@@ -318,6 +336,7 @@ function AESBlock2() {
         }
     } else if (phase === 1) {
         drawBlock(currentx, currenty, "XOR", padding);
+        drawBlock(keyx, 285, "Key", padding);
         if (currenty < 275) {
             currenty += dy; // Move down into AES
         } else {
@@ -334,9 +353,7 @@ function AESBlock2() {
             currenty += dy
         } else {phase = 4}
     } else if (phase === 4){
-        for (i = 0; i < 5; i++){
-            encryptAESBlock()
-        }
+        encryptAESBlock()
         drawCBCStructure();
         paused = true;
         animateButton.disabled = true;
@@ -344,8 +361,52 @@ function AESBlock2() {
 }
 
 function encryptAESBlock() {
-    encryptedbit = Math.random() > 0.5 ? 1 : 0;
-    ciphertexts.push(encryptedbit)
+    let decimal;
+    let AECSiphertext = [
+        [1, 0, 1, 1, 0],
+        [0, 0, 0, 1, 0],
+        [0, 1, 0, 0, 1],
+        [1, 1, 1, 1, 1],
+        [0, 0, 0, 0, 1],
+        [0, 1, 1, 0, 1],
+        [1, 0, 1, 0, 1],
+        [0, 0, 1, 1, 1],
+        [1, 0, 0, 1, 1],
+        [0, 1, 0, 0, 0],
+        [1, 1, 1, 1, 0],
+        [0, 1, 1, 0, 0],
+        [0, 0, 1, 0, 0],
+        [0, 1, 1, 1, 0],
+        [0, 0, 1, 1, 0],
+        [1, 0, 0, 1, 0],
+        [1, 0, 0, 0, 1],
+        [1, 0, 1, 0, 0],
+        [1, 1, 1, 0, 0],
+        [0, 0, 1, 0, 1],
+        [0, 0, 0, 1, 1],
+        [0, 1, 0, 1, 0],
+        [0, 1, 0, 1, 1],
+        [0, 0, 0, 0, 0],
+        [0, 1, 1, 1, 1],
+        [1, 1, 1, 0, 1],
+        [1, 1, 0, 1, 1],
+        [1, 1, 0, 1, 0],
+        [1, 0, 0, 0, 0],
+        [1, 1, 0, 0, 0],
+        [1, 0, 1, 1, 1],
+        [1, 1, 0, 0, 1]
+    ];
+    if (counter < 6){
+        a = 0
+    } else {
+        a = 5
+    }
+        decimal = Xortext[a] * 16 + Xortext[a+1] * 8 + Xortext[a+2] * 4 + Xortext[a+3] * 2 + Xortext[a+4];
+        console.log(decimal)
+    for (i = 0; i < 5; i++){
+        ciphertexts.push(AECSiphertext[decimal][i])
+    }
+    console.log(ciphertexts)
     drawCBCStructure();
 }
 
@@ -543,7 +604,7 @@ var container = document.querySelector(".text");
 var speed = 40
 
 var textLines = [
-   {speed, string: "What are the yellow bits at the end? Click me to find out!" },
+   {speed, string: "What if you don't have enough bits to fill a block? Click me to find out!" },
 ];
 
 
@@ -551,7 +612,7 @@ var characters = [];
 function init() {
     textLines.forEach((line, index) => {
         if (index < textLines.length - 1) {
-           line.string += " "; //Add a space between lines
+           line.string += " ";
         }
      
         line.string.split("").forEach((character) => {
@@ -591,7 +652,7 @@ setTimeout(() => {
 
 document.getElementById("hint").addEventListener("click", function (){
     container.innerHTML = ""
-    textLines = [{speed, string: "In CBC mode, extra bits (padding) are added to the last block to make it the correct block size, ensuring the cipher processes the data correctly. Padding is removed during decryption."}]
+    textLines = [{speed, string: "In CBC mode, extra bits (padding indicated by yellow bits) are added to the last block to make it the correct block size, ensuring the cipher processes the data correctly. Padding is removed during decryption."}]
     init();
     revealOneCharacter(characters);
     hint.disabled = true

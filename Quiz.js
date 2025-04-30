@@ -6,7 +6,7 @@ const questions = [
     },
     {
         question: "What is the main purpose of an LFSR in cryptography?",
-        options: ["Sorting data", "Generating pseudorandom sequences", "Encrypting data directly", "Compressing data"],
+        options: ["Sorting data", "Generating pseudorandom sequences", "In combination with other encryption methods to encrypt data", "Compressing data"],
         answer: 2
     },
     {
