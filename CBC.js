@@ -49,8 +49,8 @@ function drawCBCStructure() {
     bits.font = "20px Helvetica";
     bits.textAlign = "left";
     bits.textBaseline = "middle";
-    bits.fillText("-Click on AES to find out more", 30, 410);
-    bits.fillText("-Yellow bits = Padding", 30, 430);
+    bits.fillText("-Click on AES to find out more", 30, 405);
+    bits.fillText("-Yellow bits = Padding", 30, 425);
     
     //draw iv block
     for (let i = 0; i < 5; i++) {
